@@ -49,8 +49,7 @@ RUN apt-get update -qq && apt-get install -y \
 
 
 #install all the packages that I need
-#RUN R -e "install.packages(c('data.table','lubridate', 'ggplot2', 'jtools'), repos='http://cran.us.r-project.org')"
-RUN ["install2.r", "data.table", "ggplot2", "jtools","pacman", "lubridate","plotly", "reticulate","telegram.bot","caret","parallel"]
+RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubridate','plotly', 'reticulate','telegram.bot','caret','parallel'), repos='http://cran.us.r-project.org')"
 
 #####################################
 #INSTALL PYTHON LIBRARIES
@@ -67,7 +66,7 @@ RUN pip install git+https://github.com/online-ml/river --upgrade
 #####################################
 
 #Copy the main folder with data and scripts
-COPY myFolder myFolder
+#COPY myFolder myFolder
 
 #Copy the r script
 # COPY scriptX.R scripX.R
