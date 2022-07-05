@@ -1,10 +1,5 @@
 
 # All-in-One Docker with Ubunutu Desktop, R(latest), Python(3.8), Spyder(latest), apache-flink(latest)
-#
-#
-#
-#
-
 
 #https://computingforgeeks.com/run-ubuntu-linux-in-docker-with-desktop-environment-and-vnc/
 #https://datawookie.dev/blog/2021/05/desktop-in-docker/
@@ -14,7 +9,6 @@
 #####################################
 
 FROM dorowu/ubuntu-desktop-lxde-vnc:latest
-
 
 WORKDIR "/root"
 
@@ -49,7 +43,7 @@ RUN apt-get update -qq && apt-get install -y \
 
 
 #install all the packages that I need
-RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubridate','plotly', 'reticulate','telegram.bot','caret','parallel'), repos='http://cran.us.r-project.org')"
+RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubridate','plotly', 'reticulate','telegram.bot','caret'), repos='http://cran.us.r-project.org')"
 
 #####################################
 #INSTALL PYTHON LIBRARIES
@@ -62,7 +56,7 @@ RUN pip install python-telegram-bot
 RUN pip install git+https://github.com/online-ml/river --upgrade
 
 #####################################
-# COPY a FOLDER if needed
+# COPY a FOLDER or a SCRIPT if needed
 #####################################
 
 #Copy the main folder with data and scripts
