@@ -19,12 +19,13 @@ FROM dorowu/ubuntu-desktop-lxde-vnc:latest
 WORKDIR "/root"
 
 #####################################
-#INSTALL R AND THE LIBRARIES
+#INSTALL LINUX LIBRARIES
 #####################################
 
 # install the linux libraries needed 
+RUN sudo add-apt-repository ppa:webupd8team/y-ppa-manager
 RUN apt-get update -qq && apt-get install -y \
-  sudo \
+  git \
   libssl-dev \
   libcurl4-gnutls-dev \
   libpq-dev \
@@ -74,5 +75,4 @@ COPY myFolder myFolder
 # when the container starts, start the main.R script
 #ENTRYPOINT ["Rscript", "detector.R"]
 # CMD ["/bin/bash"]
-
 
