@@ -23,7 +23,7 @@ WORKDIR "/root"
 #####################################
 
 # install the linux libraries needed 
-RUN sudo -E add-apt-repository ppa:webupd8team/y-ppa-manager
+RUN sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4EB27DB2A3B88B8B
 RUN apt-get update -qq && apt-get install -y \
   git \
   libssl-dev \
@@ -43,6 +43,7 @@ RUN apt-get update -qq && apt-get install -y \
   libxml2 \
   libxml2-dev \
   r-cran-caret \
+  python3-pip \
   python3.8 \
   spyder
 
@@ -56,10 +57,10 @@ RUN ["install2.r", "data.table", "ggplot2", "jtools","pacman", "lubridate","plot
 #####################################
 
 RUN pip install --upgrade pip
-RUN pip install git+https://github.com/online-ml/river --upgrade
 RUN pip install --upgrade seaborn
 RUN python -m pip install apache-flink
 RUN pip install python-telegram-bot
+RUN pip install git+https://github.com/online-ml/river --upgrade
 
 #####################################
 # COPY a FOLDER if needed
