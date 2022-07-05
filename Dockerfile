@@ -23,8 +23,7 @@ WORKDIR "/root"
 #####################################
 
 # install the linux libraries needed 
-RUN sudo add-apt-repository ppa:webupd8team/y-ppa-manager
-RUN sudo apt-get install --reinstall ca-certificates
+RUN sudo -E add-apt-repository ppa:webupd8team/y-ppa-manager
 RUN apt-get update -qq && apt-get install -y \
   git \
   libssl-dev \
