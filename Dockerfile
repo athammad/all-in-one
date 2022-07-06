@@ -51,9 +51,9 @@ RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubri
 #create a dedicated Python Virtual Environment
 RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 RUN sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-python-dev python3-dev
+  libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+  libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
+  python-dev python3-dev
 RUN pyenv install 3.8.12
 RUN pyenv global 3.8.12
 RUN git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
