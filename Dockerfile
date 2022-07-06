@@ -49,24 +49,16 @@ RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubri
 #####################################
 
 #create a dedicated Python Virtual Environment
-RUN curl https://pyenv.run | bash
-# Exports the path through these lines into .bashrc
-RUN echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc 
-RUN echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc 
-RUN echo 'eval "$(pyenv init --path)"' >> ~/.bashrc 
-RUN echo 'eval "$(pyenv init -)"' >> ~/.bashrc 
-# Make the pyenv available without needing to close terminal
-RUN exec $SHELL
-RUN pyenv update
-RUN which pyenv
-
 RUN apt-get update -qq && apt-get install -y \
     make build-essential libssl-dev zlib1g-dev \
     libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
     libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
     python-dev python3-dev
-RUN pyenv install 3.8.12
-RUN pyenv global 3.8.12
+    
+RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash \
+ && pyenv install 3.8.12 \
+ && pyenv global 3.8.12
+    
 RUN git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
 RUN pyenv virtualenv 3.8.12 mlenv
 RUN pyenv global mlenv
