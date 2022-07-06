@@ -38,7 +38,6 @@ RUN apt-get update -qq && apt-get install -y \
   libxml2-dev \
   r-cran-caret \
   python3-pip \
-  python3.8 \
   spyder
 
 
@@ -48,6 +47,14 @@ RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubri
 #####################################
 #INSTALL PYTHON LIBRARIES
 #####################################
+
+#create a dedicated Python Virtual Environment
+RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+RUN pyenv install 3.8.12
+RUN pyenv global 3.8.12
+RUN git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+RUN pyenv virtualenv 3.8.12 mlenv
+RUN pyenv global mlenv
 
 RUN pip install --upgrade pip
 RUN pip install --upgrade seaborn
