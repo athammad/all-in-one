@@ -50,11 +50,11 @@ RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubri
 
 #create a dedicated Python Virtual Environment
 RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-RUN echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc \
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc \
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
-echo 'pyenv virtualenvwrapper' >> ~/.bashrc \
-exec $SHELL
+RUN export PATH="~/.pyenv/bin:$PATH" \
+eval "$(pyenv init -)" \
+eval "$(pyenv virtualenv-init -)" \
+source ~/.bashrc
+
 
 RUN apt-get update -qq && apt-get install -y \
     make build-essential libssl-dev zlib1g-dev \
