@@ -49,12 +49,16 @@ RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubri
 #####################################
 
 #create a dedicated Python Virtual Environment
-RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-RUN export PATH="~/.pyenv/bin:$PATH" \
-eval "$(pyenv init -)" \
-eval "$(pyenv virtualenv-init -)" \
-source ~/.bashrc
-
+RUN curl https://pyenv.run | bash
+# Exports the path through these lines into .bashrc
+RUN echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc 
+RUN echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc 
+RUN echo 'eval "$(pyenv init --path)"' >> ~/.bashrc 
+RUN echo 'eval "$(pyenv init -)"' >> ~/.bashrc 
+# Make the pyenv available without needing to close terminal
+RUN exec $SHELL
+RUN pyenv update
+RUN which pyenv
 
 RUN apt-get update -qq && apt-get install -y \
     make build-essential libssl-dev zlib1g-dev \
