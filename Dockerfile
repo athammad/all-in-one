@@ -1,6 +1,5 @@
 
-# All-in-One Docker with Ubunutu Desktop, R(latest), Python(3.8), Spyder(latest), apache-flink(latest)
-
+# All-in-One Docker with Ubunutu Desktop, R(latest), Python(3.8), Spyder(latest), Docker and Redis
 #https://computingforgeeks.com/run-ubuntu-linux-in-docker-with-desktop-environment-and-vnc/
 #https://datawookie.dev/blog/2021/05/desktop-in-docker/
 #https://datawookie.dev/blog/2021/05/building-an-airflow-environment-in-docker/
@@ -46,14 +45,41 @@ RUN apt-get update -qq && apt-get install -y \
 RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubridate','plotly', 'reticulate','telegram.bot','caret'), repos='http://cran.us.r-project.org')"
 
 #####################################
+#INSTALL DOCKER
+#####################################
+
+RUN sudo apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+    
+RUN sudo mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+RUN echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+RUN apt-get update -qq && apt-get install -y \
+docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+#####################################
+#REDIS in container
+#####################################
+
+
+
+
+#####################################
 #INSTALL PYTHON LIBRARIES
 #####################################
 
 RUN pip install --upgrade pip
 RUN pip install --upgrade seaborn
-RUN python -m pip install apache-flink
 RUN pip install python-telegram-bot
 RUN pip install git+https://github.com/online-ml/river --upgrade
+RUN python -m pip install walrus
 
 #####################################
 # COPY a FOLDER or a SCRIPT if needed
