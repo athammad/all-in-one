@@ -1,5 +1,5 @@
 
-# All-in-One Docker with Ubunutu Desktop, R(latest), Python(3.8), Spyder(latest), Docker and Redis
+# All-in-One Docker with Ubunutu Desktop, R(latest), Python(3.8), Spyder(latest) and Redis
 #https://computingforgeeks.com/run-ubuntu-linux-in-docker-with-desktop-environment-and-vnc/
 #https://datawookie.dev/blog/2021/05/desktop-in-docker/
 #https://datawookie.dev/blog/2021/05/building-an-airflow-environment-in-docker/
@@ -44,33 +44,18 @@ RUN apt-get update -qq && apt-get install -y \
 #install all the packages that I need
 RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubridate','plotly', 'reticulate','telegram.bot','caret'), repos='http://cran.us.r-project.org')"
 
+
+
 #####################################
-#INSTALL DOCKER
+#REDIS 
 #####################################
-
-RUN sudo apt-get install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-    
-RUN sudo mkdir -p /etc/apt/keyrings
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-RUN echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
+#get latest stable version from REDIS
+RUN curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+RUN echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
 RUN apt-get update -qq && apt-get install -y \
-docker-ce docker-ce-cli containerd.io docker-compose-plugin
-
-#####################################
-#REDIS in container
-#####################################
-
-
-
-
+redis
+#run Redis in Background
+RUN redis-server --daemonize yes
 #####################################
 #INSTALL PYTHON LIBRARIES
 #####################################
