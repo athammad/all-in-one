@@ -62,6 +62,7 @@ redis
 RUN pip install --upgrade pip
 RUN pip install --upgrade seaborn
 RUN pip install python-telegram-bot
+RUN pip install scikit-learn
 RUN pip install git+https://github.com/online-ml/river --upgrade
 RUN python -m pip install walrus
 
@@ -69,7 +70,7 @@ RUN python -m pip install walrus
 #####################################
 
 #run Redis in Background
-RUN redis-server --daemonize yes
+#RUN redis-server --daemonize yes
 
 #####################################
 # COPY a FOLDER or a SCRIPT if needed
