@@ -54,8 +54,7 @@ RUN curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/
 RUN echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
 RUN apt-get update -qq && apt-get install -y \
 redis
-#run Redis in Background
-RUN redis-server --daemonize yes
+
 #####################################
 #INSTALL PYTHON LIBRARIES
 #####################################
@@ -65,6 +64,12 @@ RUN pip install --upgrade seaborn
 RUN pip install python-telegram-bot
 RUN pip install git+https://github.com/online-ml/river --upgrade
 RUN python -m pip install walrus
+
+#####################################
+#####################################
+
+#run Redis in Background
+RUN redis-server --daemonize yes
 
 #####################################
 # COPY a FOLDER or a SCRIPT if needed
