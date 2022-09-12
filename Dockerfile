@@ -42,7 +42,7 @@ RUN apt-get update -qq && apt-get install -y \
 
 
 #install all the packages that I need
-RUN R -e "install.packages(c( 'data.table', 'ggplot2', 'jtools','pacman', 'lubridate','plotly', 'reticulate','telegram.bot','caret'), repos='http://cran.us.r-project.org')"
+RUN Rscript -e "install.packages(c('data.table', 'ggplot2', 'jtools','pacman', 'lubridate','plotly', 'reticulate','telegram','crayon','data.tree','dotenv','stargazer','purrr','filehash'));"
 
 
 
@@ -67,6 +67,9 @@ RUN pip install git+https://github.com/online-ml/river --upgrade
 RUN python -m pip install walrus
 
 #####################################
+#INSTALL RADIAN
+#####################################
+RUN pip3 install -U radian
 #####################################
 
 #run Redis in Background
